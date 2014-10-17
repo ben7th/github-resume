@@ -1,0 +1,10 @@
+GEM
+  remote: http://ruby.taobao.org/
+  specs:
+    certified (1.0.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  certified

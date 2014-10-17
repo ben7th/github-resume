@@ -1,0 +1,98 @@
+$fa-font-path: "font-awesome-4.2.0/fonts";
+@import "font-awesome-4.2.0/scss/font-awesome.scss";
+
+@mixin loading {
+  position:relative;
+  .loading-icon {
+    font-size: 40px;
+    height:80px;line-height:80px;width:80px;
+    text-align:center;
+    position:absolute;
+    top:0;left:0;
+    color:#666;
+    opacity:0;
+    pointer-events: none;
+  }
+  &.loading .loading-icon {
+    opacity: 1;
+  }
+}
+
+@mixin data-block {
+  padding:20px;
+  border-bottom:solid 1px #ddd;
+  min-height:100px;
+}
+
+$font-family: "Segoe UI", "Helvetica Neue", "Helvetica", "Arial", "sans-serif", "微软雅黑";
+body {
+  background-color: #f1f1f1;
+  padding:0;margin:0;
+  font-size: 16px;
+  font-family: $font-family;
+  input {font-family: $font-family;}
+  line-height:1.4;
+
+  .page-content {
+    width:1000px;
+    margin:0 auto;
+    margin-top:100px;
+  }
+}
+
+.user-name-ipt {
+  border-bottom:solid 1px #ddd;
+  padding:20px;
+  overflow:hidden;
+
+  input {
+    border:solid 1px #ddd;
+    height:30px;line-height:30px;
+    font-size:14px;
+    border-radius:4px;
+    width:300px;
+    padding:0 10px;
+    float:left;
+    margin-right:20px;
+    font-weight: bold;
+  }
+  a.ok {
+    height:30px;line-height:30px;
+    background-color: #444;
+    color:white;
+    border-radius:4px;
+    text-align:center;
+    width:60px;
+    float:left;
+    display: block;
+    text-decoration:none;
+    &:hover {
+      background-color: #555;
+    }
+  }
+}
+
+.user-info {
+  @include loading;
+  @include data-block;
+
+  .avatar {
+    width:80px;height:80px;
+    border-radius:100px;
+  }
+  .base-info {
+    margin-top:20px;
+  }
+}
+
+.user-repos {
+  @include loading;
+  @include data-block;
+
+  .repo {
+    background:#fafafa;
+    border-radius:4px;
+    margin-bottom:10px;
+    padding:10px;
+  }
+}
