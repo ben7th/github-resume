@@ -1,5 +1,7 @@
-$fa-font-path: "font-awesome-4.2.0/fonts";
-@import "font-awesome-4.2.0/scss/font-awesome.scss";
+$fa-font-path: "lily/fonts";
+$grid-gap: 20px;
+
+@import "lily/css/lily.scss";
 
 @mixin loading {
   position:relative;
@@ -16,83 +18,92 @@ $fa-font-path: "font-awesome-4.2.0/fonts";
   &.loading .loading-icon {
     opacity: 1;
   }
+  &.loading .loaded {
+    opacity: 0;
+    pointer-events: none;
+  }
 }
 
-@mixin data-block {
-  padding:20px;
-  border-bottom:solid 1px #ddd;
-  min-height:100px;
-}
-
-$font-family: "Segoe UI", "Helvetica Neue", "Helvetica", "Arial", "sans-serif", "微软雅黑";
 body {
   background-color: #f1f1f1;
-  padding:0;margin:0;
-  font-size: 16px;
-  font-family: $font-family;
-  input {font-family: $font-family;}
-  line-height:1.4;
-
   .page-content {
-    width:1000px;
-    margin:0 auto;
-    margin-top:100px;
-  }
-}
+    margin-top:50px;
+    margin-bottom:100px;
+    font-size:16px;
 
-.user-name-ipt {
-  border-bottom:solid 1px #ddd;
-  padding:20px;
-  overflow:hidden;
-
-  input {
-    border:solid 1px #ddd;
-    height:30px;line-height:30px;
-    font-size:14px;
-    border-radius:4px;
-    width:300px;
-    padding:0 10px;
-    float:left;
-    margin-right:20px;
-    font-weight: bold;
-  }
-  a.ok {
-    height:30px;line-height:30px;
-    background-color: #444;
-    color:white;
-    border-radius:4px;
-    text-align:center;
-    width:60px;
-    float:left;
-    display: block;
-    text-decoration:none;
-    &:hover {
-      background-color: #555;
+    .data-piece {
+      min-height:20px;
+      background-color:#fff;
+      border-radius:$border-radius-default;
+      padding:$grid-gap;
+      margin-bottom: $grid-gap;
+      position:relative;
+      h3, h4{
+        margin-top:0;
+      }
+      h4 {
+        margin-bottom: $grid-gap;
+      }
     }
   }
 }
 
-.user-info {
+.user-name-location {
   @include loading;
-  @include data-block;
 
+  .name {
+    font-weight:bold;
+    font-size:32px;
+    margin-bottom:$grid-gap;
+  }
+
+  .misc {
+    > span {margin-right:20px;}
+    i {color:$black-50;}
+  }
   .avatar {
     width:80px;height:80px;
+    position:absolute;
+    top:20px;right:20px;
+    background-color:#f1f1f1;
     border-radius:100px;
-  }
-  .base-info {
-    margin-top:20px;
+    overflow:hidden;
+    img {width:100%;height:100%;}
   }
 }
 
-.user-repos {
+.repo-base {
   @include loading;
-  @include data-block;
+  .repos-count {
+    margin-bottom:$grid-gap;
+  }
 
-  .repo {
-    background:#fafafa;
-    border-radius:4px;
-    margin-bottom:10px;
-    padding:10px;
+  .pie {
+    background-color:#f7f7f7;
+    border-radius:$border-radius-default;
+    min-height:200px;
+    padding:30px;
+    position:relative;
+    .pie-svg {
+      width:200px;height:200px;
+      margin:0 auto;
+      margin-bottom:30px;
+    }
+    .languages {
+      .language {
+        @include clearfix;
+        margin-bottom:5px;
+        .icon {
+          width:20px;
+          height:20px;
+          float:left;
+          margin-right:10px;
+          border-radius:$border-radius-default;
+        }
+        .name {
+          float:left;
+        }
+      }
+    }
   }
 }

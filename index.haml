@@ -3,23 +3,80 @@
   %head
     %meta{:'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8'}
     %meta{:name => 'viewport', :content => 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'}
-    %title test
+    %title Github Resume
 
     %link{:rel => 'stylesheet', :href => 'static/css/ui.css'}
 
   %body
     .page-content
-      .user-name-ipt
-        %input.user-name{:type => :text, :placeholder => '请输入 github 用户名', :value => 'ben7th'}
-        %a.ok{:href => 'javascript:;'} 确定
+      .container
+        .row
+          .col-pad-12
+            .user-name-location.data-piece
+              .loading-icon
+                %i.fa.fa-cog.fa-spin
+              .loaded
+                .name{:pl => 'user.name'} {name}
+                .misc
+                  %span.location
+                    %i.fa.fa-map-marker 
+                    %span{:pl => 'user.location'} {location}
+                  %span.joined
+                    %i.fa.fa-clock-o
+                    %span 于 
+                    %span{:pl => 'user.created_at'} {created_at} 
+                    %span 来到 Github
+                  %span.homepage
+                    %i.fa.fa-user
+                    %span 个人页面：
+                    %span{:pl => 'user.blog@link'} {blog}
+                .avatar
+                  %img{:pl => 'user.avatar_url@src'}
 
-      .user-info
-        .loading-icon
-          %i.fa.fa-circle-o-notch.fa-spin
+          .col-pad-12
+            .row
+              .col-pad-4
+                .repo-base.data-piece
+                  .loading-icon
+                    %i.fa.fa-cog.fa-spin
+                  .loaded
+                    %h4 版本库概览
+                    .repos-count
+                      %a{:pl => 'user.->repos_page_url@href', :target => '_blank'}
+                        %span 共创建了
+                        %span{:pl => 'user.public_repos'} {public_repos}
+                        %span 个版本库
+                    .pie{:pl => 'repos.->repo_pie@null'}
+                      .pie-svg
+                      .languages
 
-      .user-repos
-        .loading-icon
-          %i.fa.fa-circle-o-notch.fa-spin
+              .col-pad-8
+                .repos-list.data-piece{:pl => 'repos-list.item'}
+                  %h4 版本库列表
+                  .name{:pleach => 'name'}
+
+          .col-pad-12
+            .data-piece
+              %h4 工作量概览
+
+          .col-pad-12
+            .row
+              .col-pad-4
+                .data-piece
+                  %h4 活动概览
+
+              .col-pad-8
+                .data-piece
+                  %h4 时间线
+
+          .col-pad-12
+            .data-piece
+              %h4 关注的项目
+
+          .col-pad-12
+            .data-piece
+              %h4 关注者
+
 
 
     %script{:type => 'text/javascript', :src => 'static/js/lib/coffee-script.js'}

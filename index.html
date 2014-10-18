@@ -3,23 +3,103 @@
   <head>
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-    <title>test</title>
+    <title>Github Resume</title>
     <link href='static/css/ui.css' rel='stylesheet'>
   </head>
   <body>
     <div class='page-content'>
-      <div class='user-name-ipt'>
-        <input class='user-name' placeholder='请输入 github 用户名' type='text' value='ben7th'>
-        <a class='ok' href='javascript:;'>确定</a>
-      </div>
-      <div class='user-info'>
-        <div class='loading-icon'>
-          <i class='fa fa-circle-o-notch fa-spin'></i>
-        </div>
-      </div>
-      <div class='user-repos'>
-        <div class='loading-icon'>
-          <i class='fa fa-circle-o-notch fa-spin'></i>
+      <div class='container'>
+        <div class='row'>
+          <div class='col-pad-12'>
+            <div class='user-name-location data-piece'>
+              <div class='loading-icon'>
+                <i class='fa fa-cog fa-spin'></i>
+              </div>
+              <div class='loaded'>
+                <div class='name' pl='user.name'>{name}</div>
+                <div class='misc'>
+                  <span class='location'>
+                    <i class='fa fa-map-marker'></i>
+                    <span pl='user.location'>{location}</span>
+                  </span>
+                  <span class='joined'>
+                    <i class='fa fa-clock-o'></i>
+                    <span>于</span>
+                    <span pl='user.created_at'>{created_at}</span>
+                    <span>来到 Github</span>
+                  </span>
+                  <span class='homepage'>
+                    <i class='fa fa-user'></i>
+                    <span>个人页面：</span>
+                    <span pl='user.blog@link'>{blog}</span>
+                  </span>
+                </div>
+                <div class='avatar'>
+                  <img pl='user.avatar_url@src'>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class='col-pad-12'>
+            <div class='row'>
+              <div class='col-pad-4'>
+                <div class='repo-base data-piece'>
+                  <div class='loading-icon'>
+                    <i class='fa fa-cog fa-spin'></i>
+                  </div>
+                  <div class='loaded'>
+                    <h4>版本库概览</h4>
+                    <div class='repos-count'>
+                      <a pl='user.-&gt;repos_page_url@href' target='_blank'>
+                        <span>共创建了</span>
+                        <span pl='user.public_repos'>{public_repos}</span>
+                        <span>个版本库</span>
+                      </a>
+                    </div>
+                    <div class='pie' pl='repos.-&gt;repo_pie@null'>
+                      <div class='pie-svg'></div>
+                      <div class='languages'></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class='col-pad-8'>
+                <div class='repos-list data-piece' pl='repos-list.item'>
+                  <h4>版本库列表</h4>
+                  <div class='name' pleach='name'></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class='col-pad-12'>
+            <div class='data-piece'>
+              <h4>工作量概览</h4>
+            </div>
+          </div>
+          <div class='col-pad-12'>
+            <div class='row'>
+              <div class='col-pad-4'>
+                <div class='data-piece'>
+                  <h4>活动概览</h4>
+                </div>
+              </div>
+              <div class='col-pad-8'>
+                <div class='data-piece'>
+                  <h4>时间线</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class='col-pad-12'>
+            <div class='data-piece'>
+              <h4>关注的项目</h4>
+            </div>
+          </div>
+          <div class='col-pad-12'>
+            <div class='data-piece'>
+              <h4>关注者</h4>
+            </div>
+          </div>
         </div>
       </div>
     </div>
