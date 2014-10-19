@@ -1,0 +1,23 @@
+!!!
+%html{:lang => :zh}
+  %head
+    %meta{:'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8'}
+    %meta{:name => 'viewport', :content => 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'}
+    %title Github Resume
+
+    %link{:rel => 'stylesheet', :href => 'static/js/qunit/qunit-1.15.0.css'}
+
+  %body
+    #qunit
+    #qunit-fixture
+      .area0
+        %span.t1{:df => 'user.name'}
+        %span.t2{:df => 'user.name$text'}
+
+
+    %script{:type => 'text/javascript', :src => 'static/js/lib/jquery-2.1.1.min.js'}
+    %script{:type => 'text/javascript', :src => 'static/js/qunit/qunit-1.15.0.js'}
+
+    %script{:type => 'text/javascript', :src => 'static/js/lib/coffee-script.js'}
+    %script{:type => 'text/coffeescript', :src => 'static/js/data-filler.coffee'}
+    %script{:type => 'text/coffeescript', :src => 'static/js/test.coffee'}
