@@ -3,7 +3,7 @@
   <head>
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-    <title>Github Resume</title>
+    <title>DataFiller Test</title>
     <link href='static/js/qunit/qunit-1.15.0.css' rel='stylesheet'>
   </head>
   <body>
@@ -13,6 +13,16 @@
         <span class='t1' df='user.name'></span>
         <span class='t2' df='user.id$text'></span>
         <span class='t3' df='user.type:data-type'></span>
+      </div>
+      <div class='area1'>
+        <img class='t4' df='user.avatar_url:src'>
+        <a class='t5' df='user-&gt;repos_page_url:src$text'></a>
+        <div class='t6' df='user-&gt;location_html$html'></div>
+      </div>
+      <div class='area2'>
+        <span class='t7' df='user.name'></span>
+        <span class='t8' df='user_book.title'></span>
+        <span df='user.location'></span>
       </div>
     </div>
     <script src='static/js/lib/jquery-2.1.1.min.js' type='text/javascript'></script>

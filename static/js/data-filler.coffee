@@ -1,5 +1,7 @@
 class Source
-  constructor: (@name, @from)->
+  constructor: (@name, @from = {})->
+    @getters = {}
+
     t = typeof @from
     if t is 'string'
       @type = 'URL'
@@ -10,22 +12,37 @@ class Source
 
   load: (func)->
     if @type is 'OBJECT'
-      func @from
+      @data = @from
+      @loaded = true
+      func @data
       return @
 
     if @type is 'URL'
-      jQuery.getJSON @from, func
+      jQuery.getJSON @from, (data)=>
+        @data = data
+        @loaded = true
+        func @data
       return @
 
     if @type is 'FUNCTION'
       from = @from(@scope.attrs)
       if (typeof from) is 'string'
-        jQuery.getJSON from, func
+        jQuery.getJSON from, (data)=>
+          @data = data
+          @loaded = true
+          func @data
         return @
 
       if (typeof from) is 'object'
-        func from
+        @data = from
+        @loaded = true
+        func @data
         return @
+
+  add_getter: (getter_name, func)->
+    @getters[getter_name] = func
+    return @
+
 
 
 class Scope
@@ -37,9 +54,12 @@ class Scope
     @attrs[key] = value
 
   source: (source_name, from)->
-    source = @sources[source_name] ?= new Source source_name, from
-    source.scope = @
+    if not @sources[source_name]?
+      console.log "尝试在 #{@name} 获取未定义的数据源 #{source_name}" if not from?
+      @sources[source_name] = new Source source_name, from
 
+    source = @sources[source_name]
+    source.scope = @
     return source
 
   # 加载数据，然后执行传入的回调方法
@@ -53,30 +73,40 @@ class Scope
   fill: (dom, func)->
     $dom = jQuery(dom)
     sources = @scan_needed_sources $dom
-    dom_sources = $dom.data 'sources'
+    arr = (value for key, value of sources)
 
-    l = sources.length
-    for source in sources
-      source.load (data)->
-        for field in dom_sources[source.name]
-          field.fill data
+    # console.log arr.map (i)-> i.source.name
 
-        l--
-        func() if l == 0
+    count = arr.length
+    for item in arr
+      do ->
+        source = item.source
+        fields = item.fields
+        source.load (data)->
+          for field in fields
+            field.fill data, source
+          count--
+          func() if count is 0
 
   # 扫描 dom，确定需要 load 哪些数据源
   # 返回包含数据源对象的数组
   scan_needed_sources: ($dom)->
-    sources = []
+    sources = {}
+
     $dom.find('[df]').each (i, mark)=>
       $mark = jQuery(mark)
       field = Field.from_dom $mark
-      sources[field.source_name] ?= []
-      sources[field.source_name].push field
-    $dom.data 'sources', sources
+      source_name = field.source_name
 
-    return ( @source source_name for source_name of sources)
+      if sources[source_name]?
+        sources[source_name].fields.push field
+      else
+        sources[source_name] = {
+          source: @source source_name
+          fields: [field]
+        }
 
+    return sources
 
 class Field
   @_split_parts: (string)->
@@ -107,10 +137,12 @@ class Field
       targets = arr[1 .. -1]
       @attrs[attr] = targets
 
+
   # data 是传入的数据集
-  fill: (data)->
+  # source 是传入的数据集注册对象
+  fill: (data, source)->
     for key, targets of @attrs
-      data_value = data[key]
+      data_value = @_data_value data, key, source
 
       # 默认填充 $text
       if targets.length is 0
@@ -123,10 +155,24 @@ class Field
           switch target
             when '$text'
               @$mark.text data_value
+            when '$html'
+              @$mark.html data_value
 
         if target[0] is ':'
           @$mark.attr target[1 .. -1], data_value
 
+
+  _data_value: (data, key, source)->
+    if key[0 .. 1] is '->'
+      # 调用注册的自定义方法
+      getter_name = key[2 .. -1]
+      if source.getters[getter_name]?
+        return source.getters[getter_name](data)
+      else
+        console.log "数据源 #{source.name} 上未定义 #{getter_name} getter."
+    else
+      # 访问一般属性
+      return data[key]
 
 
 

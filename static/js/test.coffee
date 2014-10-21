@@ -1,39 +1,47 @@
+QUnit.assert.has_keys = (value, expected, message)->
+  autual = (key for key of value).sort()
+  return this.deepEqual autual, expected.sort()
+
 do ->
   QUnit.module 'scope 操作'
 
   df = new DataFiller()
 
-  QUnit.test 'new DataFiller', (assert)->
+  QUnit.test '创建一个新的 DataFiller 对象', (assert)->
     assert.ok df
+
+  # -----------------------
 
   scope = df.scope 'github', {
     username: 'ben7th'
   }
 
-  QUnit.test '声明 scope', (assert)->
+  QUnit.test '声明一个 scope，并设置 scope 变量', (assert)->
     assert.ok df.scope('github')
     assert.equal df.scope('github').attrs['username'], 'ben7th'
 
-  # ------------
+  # -----------------------
 
   scope_1 = df.scope 'website', {
     domain: 'www.example.com'
     country: 'CHINA'
   }
 
-  QUnit.test '声明 scope', (assert)->
+  QUnit.test '声明另一个 scope', (assert)->
     assert.deepEqual df.scope('website').attrs, {
       country: 'CHINA'
       domain: 'www.example.com'
     }
 
-  QUnit.test '获取 scope 集合', (assert)->
-    arr = (name for name, scope of df.scopes)
-    assert.deepEqual arr.sort(), ['github', 'website']
+  QUnit.test '获取 DataFiller 对象上的 scope 集合', (assert)->
+    assert.has_keys df.scopes, ['github', 'website']
 
 
 do ->
   QUnit.module '数据源操作'
+
+  # 先初始化一个 DataFiller 对象
+  # 再注册一个 scope
 
   df = new DataFiller()
   scope = df.scope 'github', {
@@ -42,6 +50,8 @@ do ->
 
   QUnit.test '方法定义', (assert)->
     assert.ok scope.source
+
+  # 可以以三种方式注册数据源：声明 url，声明 object，声明方法
 
   # 直接声明 url
   scope.source 'users', "https://api.github.com/users"
@@ -60,12 +70,12 @@ do ->
     }
 
   QUnit.test '声明数据源', (assert)->
-    arr = (name for name, source of scope.sources)
-    assert.equal arr.length, 4
+    assert.has_keys scope.sources, ['users', 'book', 'user', 'user_book']
 
   QUnit.test '从数据源取得 scope', (assert)->
-    deepEqual scope.source('users').scope, scope
-    equal scope.source('users').scope.attrs.username, 'ben7th'
+    s = scope.source('users').scope
+    deepEqual s, scope
+    equal s.attrs.username, 'ben7th'
 
   QUnit.test '数据源类型', (assert)->
     assert.equal scope.source('users').type, 'URL'
@@ -95,6 +105,7 @@ do ->
 
   QUnit.asyncTest '异步：加载数据 - 方法 - 返回 对象', (assert)->
     scope.load 'user_book', (data)->
+      console.log data
       assert.equal data.title, "ben7th's book"
       assert.equal data.price, 'free'
       QUnit.start()
@@ -104,6 +115,10 @@ do ->
 
   $dom0 = jQuery('.area0')
 
+  QUnit.test '扫描数据源', (assert)->
+    sources = scope.scan_needed_sources $dom0
+    assert.has_keys sources, ['user']
+
   QUnit.asyncTest '异步：填充数据', (assert)->
     scope.fill $dom0, ->
       assert.equal $dom0.find('span.t1').text(), 'ben7th'
@@ -111,19 +126,37 @@ do ->
       assert.equal $dom0.find('span.t3').data('type'), 'User'
       QUnit.start()
 
-  QUnit.test '扫描数据源', (assert)->
-    sources = scope.scan_needed_sources $dom0
-    assert.equal sources.length, 1
-    assert.equal sources[0].name, 'user'
+  scope.sources['user']
+    .add_getter 'repos_page_url', (data)->
+      "https://api.github.com/users/#{data.name}/repos"
+    .add_getter 'location_html', (data)->
+      $html = jQuery("<div><i class='fa fa-map-marker'></i>#{data.location}</div>")
+
+  QUnit.asyncTest '异步：填充数据', (assert)->
+    $dom1 = jQuery('.area1')
+    scope.fill $dom1, ->
+      assert.ok $dom1.find('img.t4').attr 'src'
+      assert.equal $dom1.find('a.t5').attr('src'), "https://api.github.com/users/ben7th/repos"
+      assert.ok $dom1.find('.t6').find('i').length > 0
+      QUnit.start()
+
+
+  QUnit.test '扫描包含多个数据源的dom', (assert)->
+    $dom2 = jQuery('.area2')
+    sources = scope.scan_needed_sources $dom2
+    assert.has_keys sources, ['user', 'user_book']
+
+
+  QUnit.asyncTest '异步：填充来自多个数据源的数据', (assert)->
+    $dom2 = jQuery('.area2')
+    scope.fill $dom2, ->
+      assert.equal $dom2.find('.t7').text(), 'ben7th'
+      assert.equal $dom2.find('.t8').text(), "ben7th's book"
+      QUnit.start()
 
 
 do ->
   module '数据标记解析'
-
-  QUnit.assert.has_keys = (value, expected, message)->
-    autual = (key for key of value).sort()
-    return this.deepEqual autual, expected.sort()
-
 
   QUnit.test '分析数据标记0', (assert)->
     f = new Field 'user.name'

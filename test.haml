@@ -3,7 +3,7 @@
   %head
     %meta{:'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8'}
     %meta{:name => 'viewport', :content => 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'}
-    %title Github Resume
+    %title DataFiller Test 
 
     %link{:rel => 'stylesheet', :href => 'static/js/qunit/qunit-1.15.0.css'}
 
@@ -14,6 +14,14 @@
         %span.t1{:df => 'user.name'}
         %span.t2{:df => 'user.id$text'}
         %span.t3{:df => 'user.type:data-type'}
+      .area1
+        %img.t4{:df => 'user.avatar_url:src'}
+        %a.t5{:df => 'user->repos_page_url:src$text'}
+        .t6{:df => 'user->location_html$html'}
+      .area2
+        %span.t7{:df => 'user.name'}
+        %span.t8{:df => 'user_book.title'}
+        %span{:df => 'user.location'}
 
 
     %script{:type => 'text/javascript', :src => 'static/js/lib/jquery-2.1.1.min.js'}

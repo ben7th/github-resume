@@ -48,7 +48,7 @@ body {
   }
 }
 
-.user-name-location {
+.user-info {
   @include loading;
 
   .name {
@@ -72,7 +72,7 @@ body {
   }
 }
 
-.repo-base {
+.repo-info {
   @include loading;
   .repos-count {
     margin-bottom:$grid-gap;
@@ -84,11 +84,13 @@ body {
     min-height:200px;
     padding:30px;
     position:relative;
+
     .pie-svg {
       width:200px;height:200px;
       margin:0 auto;
       margin-bottom:30px;
     }
+    
     .languages {
       .language {
         @include clearfix;

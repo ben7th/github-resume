@@ -4889,9 +4889,9 @@ body {
       body .page-content .data-piece h4 {
         margin-bottom: 20px; }
 
-.user-name-location {
+.user-info {
   position: relative; }
-  .user-name-location .loading-icon {
+  .user-info .loading-icon {
     font-size: 40px;
     height: 80px;
     line-height: 80px;
@@ -4903,20 +4903,20 @@ body {
     color: #666;
     opacity: 0;
     pointer-events: none; }
-  .user-name-location.loading .loading-icon {
+  .user-info.loading .loading-icon {
     opacity: 1; }
-  .user-name-location.loading .loaded {
+  .user-info.loading .loaded {
     opacity: 0;
     pointer-events: none; }
-  .user-name-location .name {
+  .user-info .name {
     font-weight: bold;
     font-size: 32px;
     margin-bottom: 20px; }
-  .user-name-location .misc > span {
+  .user-info .misc > span {
     margin-right: 20px; }
-  .user-name-location .misc i {
+  .user-info .misc i {
     color: gray; }
-  .user-name-location .avatar {
+  .user-info .avatar {
     width: 80px;
     height: 80px;
     position: absolute;
@@ -4925,13 +4925,13 @@ body {
     background-color: #f1f1f1;
     border-radius: 100px;
     overflow: hidden; }
-    .user-name-location .avatar img {
+    .user-info .avatar img {
       width: 100%;
       height: 100%; }
 
-.repo-base {
+.repo-info {
   position: relative; }
-  .repo-base .loading-icon {
+  .repo-info .loading-icon {
     font-size: 40px;
     height: 80px;
     line-height: 80px;
@@ -4943,38 +4943,38 @@ body {
     color: #666;
     opacity: 0;
     pointer-events: none; }
-  .repo-base.loading .loading-icon {
+  .repo-info.loading .loading-icon {
     opacity: 1; }
-  .repo-base.loading .loaded {
+  .repo-info.loading .loaded {
     opacity: 0;
     pointer-events: none; }
-  .repo-base .repos-count {
+  .repo-info .repos-count {
     margin-bottom: 20px; }
-  .repo-base .pie {
+  .repo-info .pie {
     background-color: #f7f7f7;
     border-radius: 4px;
     min-height: 200px;
     padding: 30px;
     position: relative; }
-    .repo-base .pie .pie-svg {
+    .repo-info .pie .pie-svg {
       width: 200px;
       height: 200px;
       margin: 0 auto;
       margin-bottom: 30px; }
-    .repo-base .pie .languages .language {
+    .repo-info .pie .languages .language {
       margin-bottom: 5px; }
-      .repo-base .pie .languages .language:before, .repo-base .pie .languages .language:after {
+      .repo-info .pie .languages .language:before, .repo-info .pie .languages .language:after {
         content: "";
         display: table; }
-      .repo-base .pie .languages .language:after {
+      .repo-info .pie .languages .language:after {
         clear: both; }
-      .repo-base .pie .languages .language .icon {
+      .repo-info .pie .languages .language .icon {
         width: 20px;
         height: 20px;
         float: left;
         margin-right: 10px;
         border-radius: 4px; }
-      .repo-base .pie .languages .language .name {
+      .repo-info .pie .languages .language .name {
         float: left; }
 
 /*# sourceMappingURL=ui.css.map */
